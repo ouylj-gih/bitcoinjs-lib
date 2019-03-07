@@ -78,7 +78,8 @@ function fromWIF (string, network) {
     if (version !== network.wif) throw new Error('Invalid network version')
   }
 
-  return fromPrivateKey(decoded.privateKey, {
+  let pri_buffer = Buffer.from(decoded.privateKey);
+  return fromPrivateKey(pri_buffer, {
     compressed: decoded.compressed,
     network: network
   })
