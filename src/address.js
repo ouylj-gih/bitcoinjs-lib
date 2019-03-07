@@ -10,12 +10,13 @@ const payments = require('./payments')
 function fromBase58Check (address) {
   const payload = bs58check.decode(address)
 
+  const payload_buffer = Buffer.from(payload);
   // TODO: 4.0.0, move to "toOutputScript"
-  if (payload.length < 21) throw new TypeError(address + ' is too short')
-  if (payload.length > 21) throw new TypeError(address + ' is too long')
+  if (payload_buffer.length < 21) throw new TypeError(address + ' is too short')
+  if (payload_buffer.length > 21) throw new TypeError(address + ' is too long')
 
-  const version = payload.readUInt8(0)
-  const hash = payload.slice(1)
+  const version = payload_buffer.readUInt8(0)
+  const hash = payload_buffer.slice(1)
 
   return { version: version, hash: hash }
 }
